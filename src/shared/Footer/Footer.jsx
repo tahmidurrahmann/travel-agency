@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="max-w-screen-xl mx-auto footer">
                 <aside>
                     <img className="w-[60px]" src="https://themes.themegoods.com/altair/demo/wp-content/themes/altair/images/logo@2x_white.png" alt="" />
-                    <p className="text-white w-1/3">Embark on unforgettable journeys with Atlair — where every adventure is crafted to perfection.</p>
+                    <p className="text-white w-1/3">Embark on unforgettable journeys with Altair — where every adventure is crafted to perfection.</p>
                 </aside>
                 <nav>
                     <header className="footer-title">Social</header>

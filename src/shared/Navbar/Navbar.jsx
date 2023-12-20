@@ -22,11 +22,11 @@ function Navbar(props) {
     setMobileOpen((prevState) => !prevState);
   };
 
-  const navItems = <div className=''>
+  const navItems = <div className='font-permanent'>
     <NavLink
       to="/"
       className={({ isActive, isPending }) =>
-        isPending ? "pending" : isActive ? "active" : ""
+        isPending ? "pending" : isActive ? "md:py-5 md:border-b-2 text-white border-b-white font-medium text-sm" : "text-white text-sm"
       }
     >
       Home
@@ -34,9 +34,11 @@ function Navbar(props) {
   </div>
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', backgroundColor : "#000", height : "100vh" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        <div className="flex items-center font-extrabold justify-center"><img className="w-[60px]" src="https://i.ibb.co/8mSCWBJ/depositphotos-394711436-stock-illustration-plane-travel-icon-air-travel.png" alt="" /><span className="text-[#3dc6f4] font-permanent">Bhromon</span><span className="text-[#0f3a40]">.com</span></div>
+        <div className='bg-black flex justify-center'>
+          <img className="w-[100px]" src="https://themes.themegoods.com/altair/demo/wp-content/themes/altair/images/logo@2x_white.png" alt="" />
+        </div>
       </Typography>
       <Divider />
       <List>
