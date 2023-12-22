@@ -3,6 +3,7 @@ import Customers from "../Customers/Customers";
 import FixedBanner from "../FixedBanner/FixedBanner";
 import Offers from "../Offers/Offers";
 import WhyChooseUs from "../WhyChooseUs/WhyChooseUs";
+import News from "./News/News";
 
 const Home = () => {
     return (
@@ -12,6 +13,7 @@ const Home = () => {
             <Customers />
             <FixedBanner />
             <WhyChooseUs />
+            <News />
         </div>
     );
 };
