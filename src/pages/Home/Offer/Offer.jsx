@@ -20,7 +20,7 @@ const Offer = () => {
     if (isOffers) {
         return <Loading />
     }
-console.log(offer);
+
     return (
         <div>
             <Parallax
@@ -35,8 +35,42 @@ console.log(offer);
                         <p className="text-white font-permanent uppercase underline font-medium">{offer?.country}</p>
                         <h1 className=" text-white font-bold text-2xl md:text-4xl lg:text-5xl">{offer?.tripName}</h1>
                     </motion.div>
-                    </div>
+                </div>
             </Parallax>
+            <div className="px-6 lg:px-0 max-w-screen-lg mx-auto pb-16">
+                <div className="space-y-1 my-8 md:my-12">
+                    <h1 className="uppercase text-lg md:text-2xl lg:text-3xl text-center font-bold">{offer?.country} MOST EXCITING TRIP</h1>
+                    <p className="text-[#b63327] text-center uppercase text-xs font-medium md:text-sm font-permanent">EXPERIENCES {offer?.days} DAYS EXCITING TRIP.</p>
+                </div>
+                <p className="text-sm text-[#333333]">{offer?.description}</p>
+                {/* video will be here */}
+                <div className="my-8 lg:my-12">
+                    <h1 className="uppercase text-lg md:text-2xl lg:text-3xl text-center font-bold">TOUR PROGRAM</h1>
+                    <p className="text-[#b63327] text-center uppercase text-xs font-medium md:text-sm font-permanent">EXPERIENCE WORLD CLASS 5 STARS HOTELS</p>
+                </div>
+                <div className="space-y-8">
+                    <div className="space-y-2">
+                        <h6 className="text-[#b63327] text-sm font-permanent font-medium">DAY 1-2</h6>
+                        <h2 className="uppercase font-bold">{offer?.Day1}</h2>
+                        <p className="text-sm text-[#333333]">{offer?.Day1Plan}</p>
+                    </div>
+                    <div className="space-y-2">
+                        <h6 className="text-[#b63327] text-sm font-permanent font-medium">DAY 3-4</h6>
+                        <h2 className="uppercase font-bold">{offer?.Day3}</h2>
+                        <p className="text-sm text-[#333333]">{offer?.Day3Plan}</p>
+                    </div>
+                    <div className="space-y-2">
+                        <h6 className="text-[#b63327] text-sm font-permanent font-medium">DAY 5-6</h6>
+                        <h2 className="uppercase font-bold">{offer?.Day5}</h2>
+                        <p className="text-sm text-[#333333]">{offer?.Day5Plan}</p>
+                    </div>
+                    <div className="space-y-2">
+                        <h6 className="text-[#b63327] text-sm font-permanent font-medium">DAY 7-8</h6>
+                        <h2 className="uppercase font-bold">{offer?.Day7}</h2>
+                        <p className="text-sm text-[#333333]">{offer?.Day7Plan}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

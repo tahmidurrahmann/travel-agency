@@ -4,7 +4,7 @@ import Footer from "./shared/Footer/Footer";
 
 const App = () => {
     return (
-        <div className="font-kanit">
+        <div className="font-raleway">
             <Navbar></Navbar>
             <Outlet></Outlet>
             <Footer></Footer>
