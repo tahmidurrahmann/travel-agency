@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
 import { Container } from '@mui/material';
+import { MdLogin } from "react-icons/md";
 
 const drawerWidth = 240;
 
@@ -22,7 +23,7 @@ function Navbar(props) {
     setMobileOpen((prevState) => !prevState);
   };
 
-  const navItems = <div className='font-permanent'>
+  const navItems = <div className='font-permanent flex flex-col md:flex-row justify-center items-center gap-6'>
     <NavLink
       to="/"
       className={({ isActive, isPending }) =>
@@ -31,10 +32,18 @@ function Navbar(props) {
     >
       Home
     </NavLink>
+    <NavLink
+      to="/login"
+      className={({ isActive, isPending }) =>
+        isPending ? "pending" : isActive ? "md:py-5 md:border-b-2 text-white border-b-white font-medium text-sm" : "text-white text-sm"
+      }
+    >
+      <div className='flex'><MdLogin size="20" className='mr-2' />Login</div>
+    </NavLink>
   </div>
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', backgroundColor : "#000", height : "100vh" }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', backgroundColor: "#000", height: "100vh" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         <div className='bg-black flex justify-center'>
           <img className="w-[100px]" src="https://themes.themegoods.com/altair/demo/wp-content/themes/altair/images/logo@2x_white.png" alt="" />
