@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Parallax } from 'react-parallax';
 import { motion } from "framer-motion"
+import { Helmet } from "react-helmet-async";
 
 const Offer = () => {
     const { id } = useParams();
@@ -23,6 +24,9 @@ const Offer = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Offer | Altair</title>
+            </Helmet>
             <Parallax
                 blur={{ min: -15, max: 15 }}
                 bgImage={offer?.image}
