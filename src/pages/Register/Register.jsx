@@ -6,18 +6,59 @@ import { Link } from "react-router-dom";
 import animation from "../../assets/Animation - 1703827244779.json"
 import "./Register.css"
 import { Helmet } from "react-helmet-async";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { updateProfile } from "firebase/auth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../shared/SocialLogin/SocialLogin";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+
+const apiKey = import.meta.env.VITE_IMGBB_ACCESS_TOKEN;
+const apiURL = `https://api.imgbb.com/1/upload?key=${apiKey}`;
 
 const Register = () => {
-
     const [seePassword, setSeePassword] = useState(true);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { createUser } = useAuth();
+    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
-    const onSubmit = data => {
+    const onSubmit = async (data) => {
         const email = data?.email;
         const password = data?.password;
         const name = data?.name;
-        const photo = data?.photo;
-        console.log(email, password, name, photo);
+        const photo = data?.photo[0];
+        const photoLink = { image: photo };
+        const res = await axiosPublic.post(apiURL, photoLink, {
+            headers: {
+                "content-type": "multipart/form-data",
+            }
+        }
+        );
+        const image = res?.data?.data?.display_url;
+        createUser(email, password)
+            .then((result) => {
+                const user = result?.user;
+                updateProfile(user, {
+                    displayName: name, photoURL: image,
+                })
+                    .then(async () => {
+                        const email = user?.email;
+                        const name = user?.displayName;
+                        const role = "user";
+                        const userInfo = { email, name, role }
+                        const res = await axiosSecure.post("/user", userInfo);
+                        if (res?.data?.insertedId) {
+                            toast.success("Register Successful");
+                        }
+                    })
+                    .catch((error) => {
+                        toast.error(error?.message);
+                    })
+            })
+            .catch(error => {
+                toast.error(error?.message);
+            })
     }
 
 
@@ -49,13 +90,15 @@ const Register = () => {
                             {errors.password?.type === 'maxLength' && <p className="text-red-600">Your Password should not more than 20 characters.</p>}
                             {errors.password?.type === 'minLength' && <p className="text-red-600">Your Password should more or equal to 8 characters.</p>}
                             {errors.password?.type === 'pattern' && <p className="text-red-600">Your Password should have one uppercase, one lowercase, one special character & One digit.</p>}
-                            <div className="input-div">
+                            <div className="input-div py-1">
                                 <input {...register("photo", { required: true })} className="inputu" type="file" />
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"  viewBox="0 0 24 24" fill="none" stroke="currentColor" className="icon"><polyline points="16 16 12 12 8 16"></polyline><line y2="21" x2="12" y1="12" x1="12"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="icon"><polyline points="16 16 12 12 8 16"></polyline><line y2="21" x2="12" y1="12" x1="12"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
                             </div>
+                            {errors.photo?.type === 'required' && <p className="text-red-600">Your Photo is Required.</p>}
                             <input className="text-white font-semibold w-full bg-[#b63327] py-1 lg:py-1.5 rounded-md uppercase hover:text-[rgb(182,51,39)] hover:bg-[#212121] hover:border hover:border-[#b63327]" type="submit" value="register" />
                         </form>
                         <p>Already Have an account? <Link className="text-[#b63327] font-bold" to='/login'>Log in.</Link></p>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
                 <div className="md:w-3/4 lg:w-1/2">

@@ -7,16 +7,27 @@ import { FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+import SocialLogin from "../../shared/SocialLogin/SocialLogin";
 
 const Login = () => {
 
+    const { loginUser } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const onSubmit = data => {
         const email = data?.email;
         const password = data?.password;
-        console.log(email, password);
+        loginUser(email, password)
+            .then(() => {
+                toast.success("Log in SuccessFul")
+            })
+            .catch(error => {
+                toast.error(error?.message);
+            })
     }
+
 
     const [seePassword, setSeePassword] = useState(true);
 
@@ -39,13 +50,14 @@ const Login = () => {
                             <input {...register("email", { required: true })} placeholder="Enter Your Email Address" className="input w-full" type="email" />
                             {errors.email?.type === 'required' && <p className="text-red-600">Email is required</p>}
                             <span className="relative">
-                                <input {...register("password", { required: true })} placeholder="Enter Your Password" className="input w-full" type={seePassword? "password" : "text"} />
+                                <input {...register("password", { required: true })} placeholder="Enter Your Password" className="input w-full mt-4" type={seePassword ? "password" : "text"} />
                                 <p className="absolute right-4 top-1" onClick={() => setSeePassword(!seePassword)}>{seePassword ? <FaEyeSlash /> : <FaEye />}</p>
                             </span>
                             {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
                             <input className="text-white font-semibold w-full bg-[#b63327] py-1 lg:py-1.5 rounded-md uppercase hover:text-[#b63327] hover:bg-[#212121] hover:border hover:border-[#b63327]" type="submit" value="Login" />
                         </form>
                         <p>Don't Have any account? <Link className="text-[#b63327] font-bold" to='/register'>Register.</Link></p>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
                 <div className="md:w-3/4 lg:w-1/2">

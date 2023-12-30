@@ -10,17 +10,41 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
-import { Container } from '@mui/material';
+import { Avatar, Button, Container, Menu, MenuItem } from '@mui/material';
 import { MdLogin } from "react-icons/md";
+import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
+import { CgLogOut } from "react-icons/cg";
+import { FaRegUser } from "react-icons/fa";
 
 const drawerWidth = 240;
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { user, logOut } = useAuth();
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        toast.success("Logout Successful")
+      })
+      .catch(error => {
+        toast.error(error?.message)
+      })
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const navItems = <div className='font-permanent flex flex-col md:flex-row justify-center items-center gap-6'>
@@ -32,14 +56,45 @@ function Navbar(props) {
     >
       Home
     </NavLink>
-    <NavLink
-      to="/login"
-      className={({ isActive, isPending }) =>
-        isPending ? "pending" : isActive ? "md:py-5 md:border-b-2 text-white border-b-white font-medium text-sm" : "text-white text-sm"
-      }
+    {user?.email ? <div ><Button
+      id="demo-positioned-button"
+      aria-controls={open ? 'demo-positioned-menu' : undefined}
+      aria-haspopup="true"
+      aria-expanded={open ? 'true' : undefined}
+      onClick={handleClick}
     >
-      <div className='flex'><MdLogin size="20" className='mr-2' />Login</div>
-    </NavLink>
+      <Avatar
+        alt="Login User" src={user?.photoURL}
+        sx={{ width: 48, height: 48 }}
+      />
+    </Button>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        <div className='space-y-1'>
+          <h1 className='flex justify-center items-center gap-2 text-[#525252] px-4 font-semibold'><FaRegUser />{user?.displayName}</h1>
+          <MenuItem onClick={handleClose}><Button variant="contained" color="error" onClick={handleLogout}> <MdLogin size="20" className='mr-2' />Logout</Button></MenuItem>
+        </div>
+      </Menu></div> : <NavLink
+        to="/login"
+        className={({ isActive, isPending }) =>
+          isPending ? "pending" : isActive ? "md:py-5 md:border-b-2 text-white border-b-white font-medium text-sm" : "text-white text-sm"
+        }
+      >
+      <Button variant="contained">Login<CgLogOut size="20" className='ml-2' /></Button>
+    </NavLink>}
   </div>
 
   const drawer = (

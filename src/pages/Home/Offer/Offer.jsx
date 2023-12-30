@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useOffers from "../../../hooks/useOffers";
 import Loading from "../../../shared/Loading/Loading";
 import { useEffect } from "react";
@@ -41,6 +41,27 @@ const Offer = () => {
                     </motion.div>
                 </div>
             </Parallax>
+            <div className="flex flex-col lg:flex-row lg:border justify-center items-center">
+                <div className="border-b lg:border lg:border-b-0 p-6 lg:p-10">
+                    <h2 className="text-[#999999] text-xs text-center">DATE</h2>
+                    <h1 className="font-raleway font-bold md:text-lg lg:text-xl text-center pt-2 lg:pt-3">{offer?.date}</h1>
+                </div>
+                <div className="border-b lg:border-r lg:border-b-0 p-6 lg:p-10">
+                    <h2 className="text-[#999999] text-xs text-center">DURATION</h2>
+                    <h1 className="font-raleway font-bold md:text-lg lg:text-xl text-center pt-2 lg:pt-3">{offer?.days}</h1>
+                </div>
+                <div className="border-b lg:border-r lg:border-b-0 p-6 lg:p-10">
+                    <h2 className="text-[#999999] text-xs text-center">PRICE</h2>
+                    <h1 className="font-raleway font-bold md:text-lg lg:text-xl text-center pt-2 lg:pt-3">${offer?.price}</h1>
+                </div>
+                <div className="border-b lg:border-r lg:border-b-0 p-6 lg:p-10">
+                    <h2 className="text-[#999999] text-xs text-center">AVAILABILITY</h2>
+                    <h1 className="font-raleway font-bold md:text-lg lg:text-xl text-center pt-2 lg:pt-3">{offer?.availability}</h1>
+                </div>
+                <div className="border-b lg:border-r lg:border-b-0 p-6 lg:p-10">
+                    <Link to={`/booking/${offer?._id}`}><button className="hover:bg-[#b63327] bg-[#4885a2] md:py-4 py-3 px-8 md:px-12 rounded-full text-white font-bold text-sm">BOOK NOW</button></Link>
+                </div>
+            </div>
             <div className="px-6 lg:px-0 max-w-screen-lg mx-auto pb-16">
                 <div className="space-y-1 my-8 md:my-12">
                     <h1 className="uppercase text-lg md:text-2xl lg:text-3xl text-center font-bold">{offer?.country} MOST EXCITING TRIP</h1>

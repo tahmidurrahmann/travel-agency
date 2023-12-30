@@ -5,30 +5,35 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import App from "../App";
 import Offer from "../pages/Home/Offer/Offer";
+import Bookings from "../pages/Bookings/Bookings";
 
 const router = createBrowserRouter([
     {
-        path : "/",
-        element : <App></App>,
-        errorElement : <Error></Error>,
-        children : [
+        path: "/",
+        element: <App></App>,
+        errorElement: <Error></Error>,
+        children: [
             {
-                path : "/",
-                element : <Home></Home>
+                path: "/",
+                element: <Home></Home>
             },
             {
-                path : "/offers/:id",
-                element : <Offer />
+                path: "/offers/:id",
+                element: <Offer />
             },
         ]
     },
     {
-        path : "/login",
-        element : <Login></Login>
+        path: "/booking/:id",
+        element: <Bookings />
     },
     {
-        path : "/register",
-        element : <Register></Register>
+        path: "/login",
+        element: <Login></Login>
+    },
+    {
+        path: "/register",
+        element: <Register></Register>
     },
 ])
 
