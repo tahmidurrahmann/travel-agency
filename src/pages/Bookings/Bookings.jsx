@@ -1,5 +1,5 @@
 import { ImCross } from "react-icons/im";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useOffers from "../../hooks/useOffers";
 import Loading from "../../shared/Loading/Loading";
 import { useEffect, useRef, useState } from "react";
@@ -7,13 +7,18 @@ import "./Bookings.css"
 import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
 import emailjs from '@emailjs/browser';
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Bookings = () => {
-    const { id } = useParams();
 
+    const { id } = useParams();
+    const axiosSecure = useAxiosSecure();
     const [allOffers, isOffers] = useOffers();
     const [singleOffer, setSingleOffer] = useState({});
     const form = useRef();
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (allOffers?.data?.length) {
@@ -28,11 +33,17 @@ const Bookings = () => {
 
     const sendEmail = (e) => {
         e.preventDefault();
-
+        const tripName = singleOffer?.tripName;
+        const userEmail = user?.email;
+        const bookingInfo = { tripName, userEmail };
         emailjs.sendForm('service_8x2r2qa', 'template_z5fouma', form.current, 'kM2ZZ-I4QiQPp3W81')
-            .then((result) => {
+            .then(async (result) => {
                 if (result.text) {
-                    toast.success('You Successfully Booked This Trip!')
+                    const res = await axiosSecure.post("/bookingInfo", bookingInfo);
+                    if (res?.data?.insertedId) {
+                        toast.success('You Successfully Booked This Trip!');
+                        navigate(`/offers/${id}`);
+                    }
                 }
             }, (error) => {
                 toast.error(error.text);
@@ -66,7 +77,7 @@ const Bookings = () => {
                                 </div>
                                 <div className="flex flex-col md:flex-row gap-6 mt-8">
                                     <div className="inputContainer w-full">
-                                        <input name="user_email" required className="customInput" type="email" />
+                                        <input defaultValue={user?.email} readOnly name="user_email" required className="customInput" type="email" />
                                         <label className="inputLabel font-semibold">EMAIL</label>
                                         <div className="inputUnderline"></div>
                                     </div>

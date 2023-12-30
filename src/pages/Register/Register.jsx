@@ -2,7 +2,7 @@ import Lottie from "lottie-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import animation from "../../assets/Animation - 1703827244779.json"
 import "./Register.css"
 import { Helmet } from "react-helmet-async";
@@ -22,6 +22,10 @@ const Register = () => {
     const { createUser } = useAuth();
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    let from = location.state?.from?.pathname || "/";
 
     const onSubmit = async (data) => {
         const email = data?.email;
@@ -50,6 +54,7 @@ const Register = () => {
                         const res = await axiosSecure.post("/user", userInfo);
                         if (res?.data?.insertedId) {
                             toast.success("Register Successful");
+                            navigate(from, { replace: true });
                         }
                     })
                     .catch((error) => {

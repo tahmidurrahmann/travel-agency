@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -15,6 +15,10 @@ const Login = () => {
 
     const { loginUser } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    let from = location.state?.from?.pathname || "/";
 
     const onSubmit = data => {
         const email = data?.email;
@@ -22,6 +26,7 @@ const Login = () => {
         loginUser(email, password)
             .then(() => {
                 toast.success("Log in SuccessFul")
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 toast.error(error?.message);
