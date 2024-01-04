@@ -6,21 +6,18 @@ import { useState } from "react";
 import { Parallax } from 'react-parallax';
 import { motion } from "framer-motion"
 import { Helmet } from "react-helmet-async";
-import useBookings from "../../../hooks/useBookings";
-
 const Offer = () => {
-    const { id } = useParams();
 
+    const { id } = useParams();
     const [allOffers, isOffers] = useOffers();
     const [offer, setOffer] = useState({});
-    const [booking, isBooking] = useBookings();
 
     useEffect(() => {
         const offers = allOffers?.data?.find(offer => offer?._id === id);
         setOffer(offers);
     }, [allOffers, id])
 
-    if (isOffers || isBooking) {
+    if (isOffers) {
         return <Loading />
     }
 
@@ -61,7 +58,7 @@ const Offer = () => {
                     <h1 className="font-raleway font-bold md:text-lg lg:text-xl text-center pt-2 lg:pt-3">{offer?.availability}</h1>
                 </div>
                 <div className="border-b lg:border-r lg:border-b-0 p-6 lg:p-10">
-                    {booking || offer?.availability?.length === 0 ? <button className="bg-gray-200 disabled md:py-4 py-3 px-8 md:px-12 rounded-full text-white font-bold text-sm">BOOK NOW</button> : <Link to={`/booking/${offer?._id}`}><button className="hover:bg-[#b63327] bg-[#4885a2] md:py-4 py-3 px-8 md:px-12 rounded-full text-white font-bold text-sm">BOOK NOW</button></Link>}
+                    <Link to={`/booking/${offer?._id}`}><button className="hover:bg-[#b63327] bg-[#4885a2] md:py-4 py-3 px-8 md:px-12 rounded-full text-white font-bold text-sm">BOOK NOW</button></Link>
                 </div>
             </div>
             <div className="px-6 lg:px-0 max-w-screen-lg mx-auto pb-16">

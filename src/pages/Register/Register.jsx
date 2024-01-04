@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 import { updateProfile } from "firebase/auth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../shared/SocialLogin/SocialLogin";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const apiKey = import.meta.env.VITE_IMGBB_ACCESS_TOKEN;
 const apiURL = `https://api.imgbb.com/1/upload?key=${apiKey}`;
@@ -21,7 +20,6 @@ const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser } = useAuth();
     const axiosPublic = useAxiosPublic();
-    const axiosSecure = useAxiosSecure();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -51,7 +49,7 @@ const Register = () => {
                         const name = user?.displayName;
                         const role = "user";
                         const userInfo = { email, name, role }
-                        const res = await axiosSecure.post("/user", userInfo);
+                        const res = await axiosPublic.post("/user", userInfo);
                         if (res?.data?.insertedId) {
                             toast.success("Register Successful");
                             navigate(from, { replace: true });

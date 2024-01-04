@@ -9,13 +9,15 @@ import List from '@mui/material/List';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Avatar, Button, Container, Menu, MenuItem } from '@mui/material';
 import { MdLogin } from "react-icons/md";
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { CgLogOut } from "react-icons/cg";
 import { FaRegUser } from "react-icons/fa";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { ImCross } from "react-icons/im";
 
 const drawerWidth = 240;
 
@@ -83,8 +85,9 @@ function Navbar(props) {
           horizontal: 'left',
         }}
       >
-        <div className='space-y-1'>
-          <h1 className='flex justify-center items-center gap-2 text-[#525252] px-4 font-semibold'><FaRegUser />{user?.displayName}</h1>
+        <div className='space-y-1.5'>
+          <h1 className='flex justify-center items-center gap-2 text-[#525252] px-6 font-semibold pt-2'><FaRegUser />{user?.displayName}</h1>
+          <MenuItem onClick={handleClose}><Link to="/dashboard"><button className='flex justify-center items-center gap-2 font-semibold'> <LuLayoutDashboard size="20" className='mx-2' />Dashboard</button></Link></MenuItem>
           <MenuItem onClick={handleClose}><Button variant="contained" color="error" onClick={handleLogout}> <MdLogin size="20" className='mr-2' />Logout</Button></MenuItem>
         </div>
       </Menu></div> : <NavLink
@@ -99,9 +102,10 @@ function Navbar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', backgroundColor: "#000", height: "100vh" }}>
+      <div><ImCross className='text-white pt-3 hover:text-red-500' size={26} /></div>
       <Typography variant="h6" sx={{ my: 2 }}>
         <div className='bg-black flex justify-center'>
-          <img className="w-[100px]" src="https://themes.themegoods.com/altair/demo/wp-content/themes/altair/images/logo@2x_white.png" alt="" />
+          <img referrerPolicy="no-referrer" className="w-[100px]" src="https://themes.themegoods.com/altair/demo/wp-content/themes/altair/images/logo@2x_white.png" alt="" />
         </div>
       </Typography>
       <Divider />
