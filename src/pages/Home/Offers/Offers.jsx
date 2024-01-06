@@ -38,7 +38,7 @@ const Offers = () => {
             <form onSubmit={handleSearchDestination} className="flex flex-wrap md:flex-row justify-center items-center gap-6 my-6 md:my-12">
                 <div className="flex-col">
                     <div><label htmlFor="destination">Destination</label></div>
-                    <input type="text" name="city" className="border px-2 py-1 mt-2" placeholder="Search by City Name" required />
+                    <input type="text" name="city" className="border px-2 py-1 mt-2" placeholder="Search by Country Name" required />
                 </div>
                 {/* <div className="flex-col">
                     <div><label htmlFor="date">Start Date</label></div>
@@ -50,7 +50,7 @@ const Offers = () => {
                 </div> */}
                 <div className="flex-col">
                     <div><label htmlFor="date">Price</label></div>
-                    <input name="price" type="number" className="border px-2 py-1 mt-2" placeholder="USD EX. 100" required />
+                    <input name="price" type="number" className="border px-2 py-1 mt-2" placeholder="USD EX. 1000" required />
                 </div>
                 <input className="hover:bg-[#b63327] bg-[#4885a2] py-2 px-16 md:px-24 rounded-full text-white font-bold text-sm" type="submit" value="SEARCH" />
             </form>
