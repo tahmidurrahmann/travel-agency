@@ -35,7 +35,10 @@ const Bookings = () => {
         e.preventDefault();
         const tripName = singleOffer?.tripName;
         const userEmail = user?.email;
-        const bookingInfo = { tripName, userEmail };
+        const tickets = parseInt(e?.target?.tickets?.value);
+        const price = singleOffer?.price * tickets;
+        const photo = singleOffer?.image;
+        const bookingInfo = { tripName, userEmail, tickets, price, photo };
         emailjs.sendForm('service_8x2r2qa', 'template_z5fouma', form.current, 'kM2ZZ-I4QiQPp3W81')
             .then(async (result) => {
                 if (result.text) {
@@ -43,6 +46,9 @@ const Bookings = () => {
                     if (res?.data?.insertedId) {
                         toast.success('You Successfully Booked This Trip!');
                         navigate(`/offers/${id}`);
+                    }
+                    else{
+                        toast.error("Insufficient ticket availability. Please choose a lower quantity.")
                     }
                 }
             }, (error) => {
@@ -65,13 +71,13 @@ const Bookings = () => {
                             <form ref={form} onSubmit={sendEmail} className="w-full">
                                 <div className="flex flex-col md:flex-row gap-6">
                                     <div className="inputContainer w-full">
-                                        <input name="first_name" required className="customInput" type="text" />
-                                        <label className="inputLabel font-semibold">FIRST Name</label>
+                                        <input defaultValue={user?.displayName} readOnly name="first_name" required className="customInput" type="text" />
+                                        <label className="inputLabel font-semibold">FULL Name</label>
                                         <div className="inputUnderline"></div>
                                     </div>
                                     <div className="inputContainer w-full">
-                                        <input name="last_name" required className="customInput" type="text" />
-                                        <label className="inputLabel font-semibold">LAST Name</label>
+                                        <input name="tickets" required className="customInput" type="number" />
+                                        <label className="inputLabel font-semibold">NUMBERS OF TICKETS</label>
                                         <div className="inputUnderline"></div>
                                     </div>
                                 </div>
@@ -83,7 +89,7 @@ const Bookings = () => {
                                     </div>
                                     <div className="inputContainer w-full">
                                         <input name="number" required className="customInput" type="text" />
-                                        <label className="inputLabel font-semibold">NUMBER</label>
+                                        <label className="inputLabel font-semibold">YOUR NUMBER</label>
                                         <div className="inputUnderline"></div>
                                     </div>
                                 </div>

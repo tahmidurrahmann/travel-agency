@@ -8,10 +8,14 @@ import Toolbar from '@mui/material/Toolbar';
 import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { IoHomeOutline } from "react-icons/io5";
+import { FaUser } from "react-icons/fa";
+import useAuth from '../../../hooks/useAuth';
 
 const drawerWidth = 240;
 
+
 function Dashboard(props) {
+    const { user } = useAuth();
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -20,14 +24,28 @@ function Dashboard(props) {
     };
 
     const drawer = (
-        <div className='flex justify-center pt-6'>
+        <div className='flex flex-col items-center gap-4 justify-center pt-6'>
+            <div className="avatar placeholder">
+                <div className="bg-neutral text-neutral-content rounded-full w-24">
+                    <img referrerPolicy="no-referrer" src={user?.photoURL} alt="" />
+                </div>
+            </div>
+            <h1 className='font-bold'>{user?.displayName}</h1>
+            <NavLink
+                to="/dashboard/userProfile"
+                className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "font-semibold md:text-lg text-[#4885a2] bg-gray-100 py-2 w-3/4 rounded-lg border-l-4 border-l-[#4885a2] flex justify-center" : "font-semibold md:text-lg hover:text-neutral-900 text-neutral-400"
+                }
+            >
+                <div className='flex items-center gap-2'><FaUser /> My Profile</div>
+            </NavLink>
             <NavLink
                 to="/"
                 className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "font-semibold text-lg md:text-xl text-neutral-900 " : "font-semibold text-lg md:text-xl hover:text-neutral-900 text-neutral-600"
+                    isPending ? "pending" : isActive ? "font-semibold md:text-lg text-neutral-900 " : "font-semibold md:text-lg hover:text-neutral-900 text-neutral-400"
                 }
             >
-               <div className='flex items-center gap-2'><IoHomeOutline /> Home</div>
+                <div className='flex items-center gap-2'><IoHomeOutline /> Home</div>
             </NavLink>
         </div>
     );

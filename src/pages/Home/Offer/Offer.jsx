@@ -58,7 +58,7 @@ const Offer = () => {
                     <h1 className="font-raleway font-bold md:text-lg lg:text-xl text-center pt-2 lg:pt-3">{offer?.availability}</h1>
                 </div>
                 <div className="border-b lg:border-r lg:border-b-0 p-6 lg:p-10">
-                    <Link to={`/booking/${offer?._id}`}><button className="hover:bg-[#b63327] bg-[#4885a2] md:py-4 py-3 px-8 md:px-12 rounded-full text-white font-bold text-sm">BOOK NOW</button></Link>
+                    {offer?.availability > 0 ? <Link to={`/booking/${offer?._id}`}><button className="hover:bg-[#b63327] bg-[#4885a2] md:py-4 py-3 px-8 md:px-12 rounded-full text-white font-bold text-sm">BOOK NOW</button></Link> : <button className="bg-gray-200 md:py-4 py-3 px-8 md:px-12 rounded-full text-white font-bold text-sm">BOOK NOW</button> }
                 </div>
             </div>
             <div className="px-6 lg:px-0 max-w-screen-lg mx-auto pb-16">

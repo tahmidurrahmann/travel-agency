@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link, NavLink } from 'react-router-dom';
-import { Avatar, Button, Container, Menu, MenuItem } from '@mui/material';
+import { Button, Container, Menu, MenuItem } from '@mui/material';
 import { MdLogin } from "react-icons/md";
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
@@ -18,6 +18,7 @@ import { CgLogOut } from "react-icons/cg";
 import { FaRegUser } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { ImCross } from "react-icons/im";
+import { FaHome } from "react-icons/fa";
 
 const drawerWidth = 240;
 
@@ -56,7 +57,7 @@ function Navbar(props) {
         isPending ? "pending" : isActive ? "md:py-5 md:border-b-2 text-white border-b-white font-medium text-sm" : "text-white text-sm"
       }
     >
-      Home
+     <span className='flex items-center gap-2'><FaHome /> Home</span>
     </NavLink>
     {user?.email ? <div ><Button
       id="demo-positioned-button"
@@ -65,10 +66,7 @@ function Navbar(props) {
       aria-expanded={open ? 'true' : undefined}
       onClick={handleClick}
     >
-      <Avatar
-        alt="Login User" src={user?.photoURL}
-        sx={{ width: 48, height: 48 }}
-      />
+      <img className="w-[40px] rounded-full" referrerPolicy="no-referrer" src={user?.photoURL} alt="" />
     </Button>
       <Menu
         id="demo-positioned-menu"

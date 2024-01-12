@@ -8,6 +8,7 @@ import Offer from "../pages/Home/Offer/Offer";
 import Bookings from "../pages/Bookings/Bookings";
 import PrivateRoute from "../private/PrivateRoute";
 import Dashboard from "../pages/Dashboard/Dashboard/Dashboard";
+import UserProfile from "../pages/Dashboard/Dashboard/UserProfile";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/offers/:id",
-                element: <PrivateRoute><Offer /></PrivateRoute>
+                element: <Offer />
             },
         ]
     },
@@ -41,7 +42,10 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <PrivateRoute><Dashboard /></PrivateRoute>,
         children : [
-           
+           {
+            path : "userProfile",
+            element : <PrivateRoute><UserProfile></UserProfile></PrivateRoute>
+           }
         ]
     },
 ])
